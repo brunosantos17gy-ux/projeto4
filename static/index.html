@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CyberSentinel | Security Operations Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark"><span>CS</span></div><div><b>CYBER<span>SENTINEL</span></b><small>SECURITY OPERATIONS</small></div></div>
+    <div class="side-label">WORKSPACE</div>
+    <button class="nav-item active" data-view="overview"><span>▦</span> Visão geral</button>
+    <button class="nav-item" data-view="investigation"><span>⌕</span> Investigações <i id="nav-active-count">01</i></button>
+    <button class="nav-item" data-view="history"><span>◷</span> Histórico</button>
+    <div class="side-label side-label-gap">SISTEMA</div>
+    <button class="nav-item" data-view="about"><span>ⓘ</span> Sobre o laboratório</button>
+    <div class="sidebar-bottom">
+      <div class="status-card"><div class="status-line"><span class="pulse"></span> AMBIENTE OPERACIONAL</div><small>Laboratório isolado · dados fictícios</small></div>
+      <div class="profile"><div class="avatar">AN</div><div><b>Analista em treinamento</b><small>Perfil estudante</small></div><span class="profile-dot"></span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb">SOC <span>/</span> <b id="breadcrumb">Visão geral</b></div>
+      <div class="top-actions"><div class="zoom-ctl" title="Tamanho da interface"><button id="zoom-out" aria-label="Diminuir">A−</button><button id="zoom-auto" aria-label="Automático">Auto</button><button id="zoom-in" aria-label="Aumentar">A+</button></div><button class="help-btn" id="open-guide">? Como usar</button><div class="api-status"><span class="pulse" id="api-pulse"></span><span id="api-label">Verificando IA...</span></div><div class="top-avatar">AN</div></div>
+    </header>
+
+    <section class="view active" id="view-overview">
+      <div class="page-heading"><div><div class="eyebrow">MONITORAMENTO • TEMPO REAL SIMULADO</div><h1>Central de operações</h1><p>Bem-vindo ao ambiente de treinamento. Investigue, decida e aprenda.</p></div><button class="btn btn-primary" id="start-incident"><span>＋</span> Novo incidente</button></div>
+      <section class="panel howto" id="howto">
+        <button class="howto-close" id="close-guide" aria-label="Fechar guia">×</button>
+        <div class="eyebrow">COMO USAR ESTE PAINEL</div>
+        <h2>Você é o analista de segurança de plantão</h2>
+        <p class="howto-lead">Aqui chegam alertas <b>fictícios</b>. Seu trabalho é investigar e decidir o que fazer, como em uma central de segurança real. Ninguém é invadido de verdade.</p>
+        <ol class="howto-steps">
+          <li><b>Escolha um incidente</b><span>Na lista "Fila de alertas", clique na seta ↗ do alerta (ou em <i>Novo incidente</i>).</span></li>
+          <li><b>Leia as evidências</b><span>Veja o resumo e a tabela de eventos (logs): o que aconteceu, quando e de onde.</span></li>
+          <li><b>Pergunte à IA (opcional)</b><span>O Sentinel AI, à direita, explica os dados. Ele ajuda a pensar, mas a decisão é sua.</span></li>
+          <li><b>Escolha uma ação e registre</b><span>Marque A, B, C ou D e clique em <i>Registrar decisão</i>. Você recebe nota e explicação.</span></li>
+          <li><b>Veja seu desempenho</b><span>Em <i>Histórico</i>: gráfico, nota por critério e relatório em PDF.</span></li>
+        </ol>
+        <p class="howto-note">Letras pequenas? Use <b>A+</b> no canto superior direito.</p>
+      </section>
+      <div class="metric-grid">
+        <article class="metric"><div class="metric-top"><span>INCIDENTES ATIVOS</span><span class="metric-icon red">◉</span></div><strong id="metric-active">01</strong><small><em class="red-text">●</em> Aguardando análise</small></article>
+        <article class="metric"><div class="metric-top"><span>INVESTIGAÇÕES</span><span class="metric-icon blue">⌕</span></div><strong id="metric-investigations">00</strong><small>Iniciadas nesta sessão</small></article>
+        <article class="metric"><div class="metric-top"><span>PONTUAÇÃO MÉDIA</span><span class="metric-icon green">↗</span></div><strong id="metric-score">—</strong><small>Desempenho nas simulações</small></article>
+        <article class="metric"><div class="metric-top"><span>AMBIENTE</span><span class="metric-icon purple">⬡</span></div><strong class="metric-word">SEGURO</strong><small>Simulação sem impacto real</small></article>
+      </div>
+      <div class="content-grid">
+        <section class="panel incident-panel">
+          <div class="panel-heading"><div><div class="eyebrow">FILA DE ALERTAS</div><h2>Incidentes que exigem atenção</h2></div><span class="live-tag"><i></i> AO VIVO SIMULADO</span></div>
+          <div id="incident-list"></div>
+          <div class="panel-footer"><span id="panel-count">Exibindo alertas demonstrativos</span><button class="text-btn" data-view="investigation">Abrir central de investigação →</button></div>
+        </section>
+        <section class="panel side-panel">
+          <div class="panel-heading"><div><div class="eyebrow">SEU DESEMPENHO</div><h2>Resumo de treinamento</h2></div></div>
+          <div class="score-ring"><div><strong id="ring-score">—</strong><small>PONTOS</small></div></div>
+          <div class="score-caption">Sua pontuação aparecerá após concluir uma simulação.</div>
+          <div class="mini-stats"><div><span>Simulações concluídas</span><b id="completed-count">0</b></div><div><span>Melhor resultado</span><b id="best-score">—</b></div></div>
+          <div class="tip-box"><span>✦ DICA DO ANALISTA</span><p>Preserve evidências antes de executar ações que possam alterar os registros. Uma boa investigação começa com contexto.</p></div>
+        </section>
+      </div>
+      <section class="panel live-feed">
+        <div class="panel-heading"><div><div class="eyebrow">TELEMETRIA • SIEM DE LABORATÓRIO</div><h2>Fluxo de eventos</h2></div>
+          <div class="feed-tools"><span class="count-tag" id="feed-count">0 eventos</span><span class="live-tag"><i></i> AO VIVO SIMULADO</span><button class="btn btn-secondary btn-sm" id="feed-toggle">❚❚ Pausar</button></div></div>
+        <div id="feed-list" class="feed-list" aria-live="off"></div>
+      </section>
+      <div class="bottom-note"><span>ⓘ</span> Este é um ambiente acadêmico. Os alertas, endereços IP e eventos apresentados são fictícios e não representam ameaças reais.</div>
+    </section>
+
+    <section class="view" id="view-investigation">
+      <div class="page-heading compact"><div><div class="eyebrow">RESPOSTA A INCIDENTES / LABORATÓRIO</div><h1>Central de investigação</h1><p>Analise os indicadores e escolha a resposta mais adequada.</p></div><span class="severity-pill high-pill" id="scenario-severity">SEVERIDADE ALTA</span></div>
+      <div class="stepbar"><span><b>1</b> Leia o cenário</span><span><b>2</b> Analise os eventos</span><span><b>3</b> Pergunte à IA <em>(opcional)</em></span><span><b>4</b> Escolha e registre</span></div>
+      <div class="investigation-layout">
+        <div class="investigation-left">
+          <section class="panel scenario-panel">
+            <div class="panel-heading"><div><div class="eyebrow">CENÁRIO ATUAL</div><h2 id="scenario-title">Possível comprometimento de conta administrativa</h2></div><span class="mono muted" id="scenario-id">INC-2026-001</span></div>
+            <p class="scenario-description" id="scenario-description">O sistema de monitoramento identificou uma sequência anormal de falhas de autenticação, seguida de um acesso bem-sucedido a uma conta com privilégios administrativos.</p>
+            <div class="fact-grid" id="fact-grid">
+              <div><small>TENTATIVAS FALHAS</small><b>47</b></div><div><small>CONTA AFETADA</small><b>administrator</b></div><div><small>ORIGEM (FICTÍCIA)</small><b class="mono">185.XX.XX.42</b></div><div><small>HORÁRIO</small><b class="mono">03:14:22</b></div>
+            </div>
+          </section>
+          <section class="panel logs-panel">
+            <div class="panel-heading"><div><div class="eyebrow">EVIDÊNCIAS COLETADAS</div><h2>Eventos de segurança</h2></div><span class="count-tag">04 EVENTOS</span></div>
+            <div class="log-table-wrap"><table><thead><tr><th>HORÁRIO</th><th>ORIGEM</th><th>EVENTO</th><th>RESULTADO</th></tr></thead><tbody id="log-rows">
+              <tr><td class="mono">03:12:01</td><td class="mono">185.XX.XX.42</td><td>Falha de autenticação</td><td><span class="log-fail">NEGADO</span></td></tr>
+              <tr><td class="mono">03:12:45</td><td class="mono">185.XX.XX.42</td><td>Falha de autenticação</td><td><span class="log-fail">NEGADO</span></td></tr>
+              <tr><td class="mono">03:13:59</td><td class="mono">185.XX.XX.42</td><td>Login administrativo</td><td><span class="log-success">SUCESSO</span></td></tr>
+              <tr><td class="mono">03:14:22</td><td class="mono">10.0.0.15</td><td>Alerta de privilégio</td><td><span class="log-warn">ALERTA</span></td></tr>
+            </tbody></table></div>
+            <div class="log-foot"><span><i class="pulse"></i> Logs simulados • origem: SIEM de laboratório</span><button class="text-btn" id="export-logs">↓ Exportar evidências</button></div>
+          </section>
+          <section class="panel decision-panel">
+            <div class="panel-heading"><div><div class="eyebrow">ETAPA 02 / RESPOSTA</div><h2>Qual ação você tomaria?</h2></div><span class="count-tag">ESCOLHA UMA</span></div>
+            <div class="decision-list" id="decision-list">
+              <label class="decision-option"><input type="radio" name="decision" value="investigate"><span class="option-letter">A</span><span><b>Validar os logs e preservar evidências</b><small>Correlacionar eventos, horários e escopo antes de concluir.</small></span></label>
+              <label class="decision-option"><input type="radio" name="decision" value="contain"><span class="option-letter">B</span><span><b>Conter o acesso suspeito</b><small>Revogar sessões e restringir temporariamente a conta afetada, seguindo o procedimento.</small></span></label>
+              <label class="decision-option"><input type="radio" name="decision" value="ignore"><span class="option-letter">C</span><span><b>Ignorar o alerta</b><small>Considerar que as falhas podem ser apenas erro de digitação.</small></span></label>
+              <label class="decision-option"><input type="radio" name="decision" value="delete"><span class="option-letter">D</span><span><b>Apagar os registros para limpar o servidor</b><small>Remover os eventos de autenticação do sistema.</small></span></label>
+            </div>
+            <div class="decision-actions"><span id="decision-hint">Selecione uma alternativa para registrar sua decisão.</span><button class="btn btn-primary" id="submit-decision" disabled>Registrar decisão <span>→</span></button></div>
+            <div id="evaluation" class="evaluation hidden"></div>
+          </section>
+        </div>
+        <aside class="investigation-right">
+          <section class="panel assistant-panel">
+            <div class="assistant-head"><div class="assistant-avatar">✳</div><div><b>Sentinel AI</b><small><i class="pulse"></i> Assistente de investigação</small></div><span class="ai-tag" id="chat-mode-tag">LOCAL</span></div>
+            <div class="chat-context">ASSISTENTE CONTEXTUALIZADO COM O INCIDENTE</div>
+            <div class="chat-messages" id="chat-messages"><div class="chat-msg bot"><span>Sentinel AI</span><p>Olá, analista. Temos um possível comprometimento de conta administrativa. Posso ajudar a interpretar os logs, explicar indicadores e discutir opções de resposta. Por onde deseja começar?</p></div></div>
+            <div class="suggestions"><button data-prompt="O que os logs indicam até agora?">Interpretar logs</button><button data-prompt="Qual deve ser minha prioridade neste incidente?">Definir prioridade</button></div>
+            <form id="chat-form" class="chat-form"><input id="chat-input" placeholder="Pergunte algo sobre o incidente..." autocomplete="off" maxlength="2000"><button aria-label="Enviar mensagem">↑</button></form>
+            <div class="chat-disclaimer">A IA é apoio educacional. Valide as recomendações.</div>
+          </section>
+          <section class="panel objective-panel"><div class="eyebrow">OBJETIVO DO ANALISTA</div><h3>Investigar com método</h3><ul><li>Identificar o que aconteceu.</li><li>Determinar o possível impacto.</li><li>Preservar evidências.</li><li>Propor contenção proporcional.</li></ul></section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-history">
+      <div class="page-heading"><div><div class="eyebrow">DESEMPENHO</div><h1>Histórico de simulações</h1><p>Acompanhe suas decisões e evolução no laboratório.</p></div><div class="head-actions"><button class="btn btn-secondary" id="export-report" disabled>⎙ Relatório (PDF)</button><button class="btn btn-secondary" id="clear-history">Limpar histórico</button></div></div>
+      <div class="history-charts"><section class="panel"><div class="panel-heading"><div><div class="eyebrow">EVOLUÇÃO</div><h2>Pontuação por simulação</h2></div></div><div id="history-chart" class="chart-wrap"></div></section><section class="panel"><div class="panel-heading"><div><div class="eyebrow">AVALIAÇÃO</div><h2>Média por critério</h2></div></div><div id="history-criteria" class="crit-grid"></div></section></div>
+      <section class="panel history-panel"><div class="panel-heading"><div><div class="eyebrow">REGISTROS LOCAIS</div><h2>Simulações concluídas</h2></div></div><div id="history-list" class="history-list"><div class="empty-state"><span>◷</span><b>Nenhuma simulação concluída</b><small>Conclua um incidente para visualizar seu histórico aqui.</small></div></div></section>
+    </section>
+
+    <section class="view" id="view-about">
+      <div class="page-heading"><div><div class="eyebrow">DOCUMENTAÇÃO</div><h1>Sobre o laboratório</h1><p>Conheça a proposta e os limites do CyberSentinel.</p></div></div>
+      <div class="about-grid"><section class="panel about-card"><div class="about-icon">⌘</div><h2>Objetivo acadêmico</h2><p>Treinar raciocínio técnico e tomada de decisão em resposta a incidentes, por meio de cenários fictícios e feedback educativo.</p></section><section class="panel about-card"><div class="about-icon">✳</div><h2>Inteligência artificial</h2><p>O Sentinel AI pode utilizar a API da xAI (Grok) no backend. Sem chave configurada, utiliza respostas locais demonstrativas.</p></section><section class="panel about-card"><div class="about-icon">⬡</div><h2>Ambiente seguro</h2><p>O sistema não se conecta a ativos reais, não executa varreduras e não bloqueia contas ou endereços. Todas as ações são simuladas.</p></section><section class="panel about-card"><div class="about-icon">▤</div><h2>Avaliação</h2><p>As decisões são avaliadas em quatro critérios: preservação de evidências, análise, contenção proporcional e registro. Falhas críticas (como apagar logs) zeram a nota.</p></section></div>
+    </section>
+    <footer class="footer"><span>CYBERSENTINEL <b>v1.3</b></span><span>ACADEMIC CYBER RANGE · BUILD FOR LEARNING</span></footer>
+  </main>
+</div>
+<div id="print-report" aria-hidden="true"></div>
+<div class="toast" id="toast"></div>
+<script src="/static/scenarios.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
